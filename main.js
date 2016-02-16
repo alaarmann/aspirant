@@ -12,7 +12,6 @@ module.exports =  function (aSuperclassConstructor){
   var traits = [];
   var acquire;
   var become;
-  var toConstructor;
   var aspirant;
 
   acquire = function(aTraitConstructor){
@@ -22,10 +21,6 @@ module.exports =  function (aSuperclassConstructor){
 
   become = function(aClientClassConstructor){
     clientClass = aClientClassConstructor;
-    return aspirant;
-  };
-
-  toConstructor = function(){
     return function(){
       var result = {};
       var index;
@@ -45,8 +40,7 @@ module.exports =  function (aSuperclassConstructor){
 
   aspirant = {
     acquire : acquire, 
-    become : become,
-    toConstructor : toConstructor
+    become : become
   };
   return aspirant;
 };
