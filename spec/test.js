@@ -84,6 +84,29 @@ describe("Aspirant", function() {
       });
     });
   });
+  describe("end-to-end behaviour", function() {
+    describe("when multiple traits offer the same method under the same name", function() {
+      it("retains method", function() {
+        var aspirant = new Aspirant(this.baseConstructor);
+        var walker = aspirant
+          .acquire(this.walker)
+          .acquire(this.sameWalker)
+          .become()();
+        expect(walker.walk()).toBe('Archibald X is walking');
+      });
+    });
+    describe("when multiple traits offer different methods under the same name", function() {
+      it("excludes method", function() {
+        var aspirant = new Aspirant(this.baseConstructor);
+        var walker = aspirant
+          .acquire(this.walker)
+          .acquire(this.sameWalker)
+          .acquire(this.fastWalker)
+          .become()();
+        expect(walker.walk).not.toBeDefined();
+      });
+    });
+  });
 });
 
 
