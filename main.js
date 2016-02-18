@@ -3,7 +3,9 @@
  * Traits in JavaScript
 */
 
-/*globals module */
+/*globals module, require */
+
+var createBeech = require('beech');
 
 module.exports =  function (aSuperclassConstructor){
   'use strict';
@@ -23,13 +25,13 @@ module.exports =  function (aSuperclassConstructor){
     clientClass = aClientClassConstructor;
     return function(){
       var result = {};
-      var index;
       if (superClass){
         superClass.apply(result);
       }
-      for (index = 0; index < traits.length;index += 1) {
-        traits[index].apply(result);
-      }
+      createBeech(traits).map(
+        function(aTrait){
+          aTrait.apply(result);
+        });
       if (clientClass){
         clientClass.apply(result);
       }
