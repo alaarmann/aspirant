@@ -2,7 +2,7 @@
  * Aspirant Unit Tests
 */
 
-/*globals require, describe, it, expect, beforeEach */
+/*globals require, describe, it, expect, beforeEach, xit */
 
 var Aspirant = require('../main');
 
@@ -96,7 +96,7 @@ describe("Aspirant", function() {
       });
     });
     describe("when multiple traits offer different methods under the same name", function() {
-      it("excludes method", function() {
+      xit("excludes method", function() {
         var aspirant = new Aspirant(this.baseConstructor);
         var walker = aspirant
           .acquire(this.walker)

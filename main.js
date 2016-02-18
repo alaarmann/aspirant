@@ -7,6 +7,25 @@
 
 var createBeech = require('beech');
 
+var composeTraits = function(aTraits, aObjectInCreation){
+  'use strict';
+
+  createBeech(aTraits)
+    .map( // create object from each trait
+      function(aTrait){
+        var result = {};
+        aTrait.apply(result);
+        return result;
+    })
+    .flatten(1) // now collection of name/method-pairs
+    .map( // instrument objectInCreation with methods
+      function(aName, aMethod){
+        aObjectInCreation[aName] = aMethod;
+    });
+
+  return aObjectInCreation;
+};
+
 module.exports =  function (aSuperclassConstructor){
   'use strict';
   var superClass = aSuperclassConstructor;
@@ -28,10 +47,7 @@ module.exports =  function (aSuperclassConstructor){
       if (superClass){
         superClass.apply(result);
       }
-      createBeech(traits).map(
-        function(aTrait){
-          aTrait.apply(result);
-        });
+      result = composeTraits(traits, result);
       if (clientClass){
         clientClass.apply(result);
       }
